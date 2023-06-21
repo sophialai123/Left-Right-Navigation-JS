@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Block Navigation</title>
+<style>
+    .block-item {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 1px solid black;
+      margin: 5px;
+      text-align: center;
+      line-height: 50px;
+    }
+</style>
+</head>
+<body>
+<h1>Block Navigation</h1>
+<div id="blockContainer"></div>
+<button id="leftButton" onclick="moveLeft()" disabled>Move Left</button>
+<button id="rightButton" onclick="moveRight()">Move Right</button>
+
+ 
+
+  <script>
+    // JavaScript logic here (same as the previous example)
+
+ 
+
+    // Scenario variables
+    const blockSize = 12; // Number of items to display at a time
+    const moveSize = 3; // Number of items to shift when moving
+
+ 
+
+    // List of items
+    const itemList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+
+ 
+
+    // Initial state
+    let startIndex = itemList.length - blockSize; // Start index of the displayed block
+    let endIndex = itemList.length - 1; // End index of the displayed block
+
+ 
+
+    // Function to update the displayed block
+    function updateBlock() {
+      const blockContainer = document.getElementById('blockContainer');
+      blockContainer.innerHTML = ''; // Clear the existing block
+
+ 
+
+      const block = itemList.slice(startIndex, endIndex + 1);
+      block.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'block-item';
+        itemDiv.innerText = item;
+        blockContainer.appendChild(itemDiv);
+      });
+    }
+
+ 
+
+    // Function to handle moving left
+    function moveLeft() {
+      if (startIndex - moveSize >= 0) {
+        startIndex -= moveSize;
+        endIndex -= moveSize;
+        updateBlock();
+      }
+      checkButtonStates();
+    }
+
+ 
+
+    // Function to handle moving right
+    function moveRight() {
+      if (endIndex + moveSize < itemList.length) {
+        startIndex += moveSize;
+        endIndex += moveSize;
+        updateBlock();
+      }
+      checkButtonStates();
+    }
+
+ 
+
+    // Function to check button states
+    function checkButtonStates() {
+      const leftButton = document.getElementById('leftButton');
+      const rightButton = document.getElementById('rightButton');
+
+ 
+
+      if (startIndex - moveSize < 0) {
+        leftButton.disabled = true;
+      } else {
+        leftButton.disabled = false;
+      }
+
+ 
+
+      if (endIndex + moveSize >= itemList.length) {
+        rightButton.disabled = true;
+      } else {
+        rightButton.disabled = false;
+      }
+    }
+
+
+    // Initial setup
+    updateBlock();
+    checkButtonStates();
+</script>
+</body>
+</html>
